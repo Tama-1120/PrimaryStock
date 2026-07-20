@@ -1,0 +1,8 @@
+requests
+pandas
+datetime
+bs4
+concurrent.futures
+io
+re
+pathlib
