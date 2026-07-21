@@ -27,7 +27,7 @@ jobs:
     - name: Build with PyInstaller using spec file
       run: |
         : # または、直接ビルド
-        pyinstaller PrimaryStock.py -n PrimaryStock-macOS-v-1.0.1
+        pyinstaller PrimaryStock.py -n PrimaryStock-macOS-v-1.0.1 --target-architecture universal2
 
     - name: Create DMG Installer
       run: |
@@ -38,7 +38,7 @@ jobs:
           --app-drop-link 350 120 \
           --filesystem "APFS" \
           "PrimaryStock-macOS-v-1.0.1.dmg" \
-          "dist/PrimaryStock-macOS-v-1.0.1.app"
+          dist/
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
