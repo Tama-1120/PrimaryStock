@@ -2,7 +2,7 @@
 
 on:
   push:
-    branches: [ "your_branch_name" ]
+    branches: [ "macOS" ]
 
 jobs:
   build:
