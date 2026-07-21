@@ -4,6 +4,10 @@ on:
   push:
     branches: [ "macOS" ]
 
+env:
+  APP_NAME: PrimaryStock
+  Version: 1.0.1
+
 jobs:
   build:
     runs-on: macos-latest
@@ -27,21 +31,21 @@ jobs:
     - name: Build with PyInstaller using spec file
       run: |
         : # または、直接ビルド
-        pyinstaller PrimaryStock.py -n PrimaryStock-macOS-v-1.0.1
+        pyinstaller "${APP_NAME}".py -n "${APP_NAME}-macOS-v-${VERSION}"
 
     - name: Create DMG Installer
       run: |
         brew install create-dmg
         mkdir dmg_source
         create-dmg \
-          --volname "PrimaryStock-macOS-v-1.0.1 Installer" \
+          --volname "${APP_NAME}-macOS-v-${VERSION} Installer" \
           --app-drop-link 350 120 \
           --filesystem "APFS" \
-          "PrimaryStock-macOS-v-1.0.1.dmg" \
+          "${APP_NAME}-macOS-v-${VERSION}.dmg" \
           dist/
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: macos-dmg-installer
-        path: PrimaryStock-macOS-v-1.0.1.dmg
+        name: "${{ env.APP_NAME }}-macOS-v-${{ env.VERSION }}"
+        path: "${{ env.APP_NAME }}-macOS-v-${{ env.VERSION }}.dmg"
