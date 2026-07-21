@@ -1,1 +1,50 @@
-﻿
+﻿name: Build macOS Executable with Spec
+
+on:
+  push:
+    branches: [ "your_branch_name" ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'   # バージョンは変更可
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Build with PyInstaller using spec file
+      run: |
+        : # .spec ファイルでビルド
+        pyinstaller your_app.spec
+        : # または、直接ビルド
+        pyinstaller your_app.py --onefile --icon=logo.icns
+
+    - name: Create DMG Installer
+      run: |
+        brew install create-dmg
+        mkdir dmg_source
+        create-dmg \
+          --volname "YOUR_APP Installer" \
+          --window-size 500 300 \
+          --icon-size 100 \
+          --app-drop-link 350 120 \
+          --filesystem "APFS" \
+          "your_app.dmg" \
+          "dist/your_app.app"
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: macos-dmg-installer
+        path: your_app.dmg
