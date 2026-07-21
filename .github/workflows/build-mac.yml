@@ -25,26 +25,5 @@ jobs:
 
     - name: Build with PyInstaller using spec file
       run: |
-        : # .spec ファイルでビルド
-        pyinstaller your_app.spec
         : # または、直接ビルド
-        pyinstaller your_app.py --onefile --icon=logo.icns
-
-    - name: Create DMG Installer
-      run: |
-        brew install create-dmg
-        mkdir dmg_source
-        create-dmg \
-          --volname "YOUR_APP Installer" \
-          --window-size 500 300 \
-          --icon-size 100 \
-          --app-drop-link 350 120 \
-          --filesystem "APFS" \
-          "your_app.dmg" \
-          "dist/your_app.app"
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: macos-dmg-installer
-        path: your_app.dmg
+        pyinstaller PrimaryStock.py -n PrimaryStock-macOS-v-1.0.1
