@@ -29,8 +29,19 @@ jobs:
         : # または、直接ビルド
         pyinstaller PrimaryStock.py -n PrimaryStock-macOS-v-1.0.1
 
+    - name: Create DMG Installer
+      run: |
+        brew install create-dmg
+        mkdir dmg_source
+        create-dmg \
+          --volname "PrimaryStock-macOS-v-1.0.1 Installer" \
+          --app-drop-link 350 120 \
+          --filesystem "APFS" \
+          "PrimaryStock-macOS-v-1.0.1.dmg" \
+          "dist/PrimaryStock-macOS-v-1.0.1.app"
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
         name: macos-dmg-installer
-        path: your_app
+        path: PrimaryStock-macOS-v-1.0.1.dmg
