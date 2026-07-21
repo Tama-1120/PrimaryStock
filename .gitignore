@@ -1,5 +1,6 @@
 output
 build
 dist
-PrimaryStock.spec
+*.spec
 Pipfile
+Pipfile.lock
