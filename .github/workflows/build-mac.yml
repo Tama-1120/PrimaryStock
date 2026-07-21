@@ -27,7 +27,7 @@ jobs:
     - name: Build with PyInstaller using spec file
       run: |
         : # または、直接ビルド
-        pyinstaller PrimaryStock.py -n PrimaryStock-macOS-v-1.0.1 --target-architecture universal2
+        pyinstaller PrimaryStock.py -n PrimaryStock-macOS-v-1.0.1
 
     - name: Create DMG Installer
       run: |
