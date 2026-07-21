@@ -2,3 +2,4 @@ output
 build
 dist
 PrimaryStock.spec
+Pipfile
