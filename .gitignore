@@ -4,3 +4,4 @@ dist
 *.spec
 Pipfile
 Pipfile.lock
+**/__pycache__/**

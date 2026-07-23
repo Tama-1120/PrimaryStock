@@ -212,21 +212,6 @@ def tv():
         "次回決算発表日"
     ]
 
-    def human_number(x):
-        if x is None:
-            return ""
-        
-        if abs(x) >= 1e12:
-            return f"{x/1e12:.2f}T"
-        elif abs(x) >= 1e9:
-            return f"{x/1e9:.2f}B"
-        elif abs(x) >= 1e6:
-            return f"{x/1e6:.2f}M"
-        elif abs(x) >= 1e3:
-            return f"{x/1e3:.2f}K"
-        else:
-            return f"{x:g}"
-
     rows = []
 
     for item in data["data"]:
@@ -235,16 +220,15 @@ def tv():
         record["コード"] = record["symbol"]["name"]
         record["会社名"] = record["symbol"]["description"]
         record["市場"] = record["symbol"]["exchange"]
-        record["価格"] = f"{record['価格']}円"
-        record["前日比"] = f"{record['前日比']:.2f}%"
-        record["PER"] = f"{record['PER']:.2f}倍"
-        record["PBR"] = f"{record['PBR']:.2f}倍"
-        record["時価総額"] = human_number(record["時価総額"])
-        record["配当利回り"] = f"{record['配当利回り']:.2f}%"
-        record["ROE"] = f"{record['ROE']:.2f}%"
-        record["ROA"] = f"{record['ROA']:.2f}%"
-        record["自己資本比率"] = f"{record['自己資本比率']:.2f}"
-
+        record["価格"]
+        record["前日比"]
+        record["PER"]
+        record["PBR"]
+        record["時価総額"]
+        record["配当利回り"]
+        record["ROE"]
+        record["ROA"]
+        record["自己資本比率"]
         record["次回決算発表日"] = datetime.fromtimestamp(record["次回決算発表日"]).strftime("%Y-%m-%d") if record["次回決算発表日"] else None
 
         del record["symbol"]
@@ -265,6 +249,21 @@ def tv():
     #print(df)
 
     return df
+
+def human_number(x):
+        if x is None:
+            return ""
+        
+        if abs(x) >= 1e12:
+            return f"{x/1e12:.2f}T"
+        elif abs(x) >= 1e9:
+            return f"{x/1e9:.2f}B"
+        elif abs(x) >= 1e6:
+            return f"{x/1e6:.2f}M"
+        elif abs(x) >= 1e3:
+            return f"{x/1e3:.2f}K"
+        else:
+            return f"{x:g}"
 
 def irbank(row):
 
@@ -440,3 +439,7 @@ def outputcsv(result):
     output_dir = Path("output")
     output_dir.mkdir(parents=True, exist_ok=True)
     result.to_csv(output_dir / f"{dt}.csv" , index=False, encoding="utf-8-sig")
+
+def search():
+    df = tv()
+    return screenstock(df)
