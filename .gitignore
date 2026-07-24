@@ -1,7 +1,7 @@
 output
 build
 dist
-*.spec
 Pipfile
 Pipfile.lock
 **/__pycache__/**
+.gitattributes
