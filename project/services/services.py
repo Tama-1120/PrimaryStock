@@ -443,7 +443,8 @@ def outputcsv(result):
 
 def search():
     df = tv()
-    return screenstock(df)
+    result = screenstock(df)
+    return result
 
 def opendir():
     output = Path("output").resolve()

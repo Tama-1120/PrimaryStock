@@ -75,8 +75,8 @@ class DataFrameModel(QAbstractTableModel):
         self.layoutChanged.emit()
             
 class ResultDialog(QDialog):
-    def __init__(self, df):
-        super().__init__()
+    def __init__(self, parent, df):
+        super().__init__(parent)
 
         self.setWindowTitle("PrimaryStockResult")
 
