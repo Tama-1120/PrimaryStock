@@ -1,9 +1,9 @@
 from PySide6.QtCore import Qt, QAbstractTableModel
 from PySide6.QtWidgets import (
-    QDialog, QVBoxLayout, QTableView, QPushButton
+    QDialog, QVBoxLayout, QTableView, QPushButton, QLabel
 )
 
-from services.services import human_number
+from services.services import human_number, opendir
 
 import pandas as pd
 from datetime import datetime
@@ -140,3 +140,39 @@ class ResultDialog(QDialog):
             data,
             columns=headers
         ).to_csv(output_dir / f"{dt}.csv" , index=False, encoding="utf-8-sig")
+
+        MessageDialog().exec()
+        
+
+class MessageDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+        self.setWindowTitle("Message")
+
+        layout = QVBoxLayout(self)
+
+        self.SetLabel()
+        layout.addWidget(self.closelabel)
+
+        self.SetCloseButton()
+        layout.addWidget(self.closebutton)
+
+        self.SetDirButton()
+        layout.addWidget(self.dirbutton)
+
+    def SetLabel(self):
+        self.closelabel = QLabel(self)
+        self.closelabel.setText("CSV出力が完了しました")
+
+    def SetCloseButton(self):
+        self.closebutton = QPushButton("閉じる")
+        self.closebutton.clicked.connect(self.close)
+
+    def SetDirButton(self):
+        self.dirbutton = QPushButton("出力ファイルを見る")
+        self.dirbutton.clicked.connect(lambda:(
+            opendir(),
+            self.close(),
+        )
+    )

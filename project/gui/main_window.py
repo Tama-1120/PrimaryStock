@@ -26,8 +26,8 @@ class MainWindow(QWidget):
         print("データ取得中")
         df = search()
         dialog = ResultDialog(df)
-        dialog.exec()
         print("データ取得完了")
+        dialog.exec()
 
 
 if __name__ == "__main__":

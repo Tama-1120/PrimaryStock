@@ -6,6 +6,7 @@ from concurrent.futures import ThreadPoolExecutor
 import io
 import re
 from pathlib import Path
+import subprocess
 
 def tv():
     url = "https://scanner.tradingview.com/japan/scan"
@@ -443,3 +444,7 @@ def outputcsv(result):
 def search():
     df = tv()
     return screenstock(df)
+
+def opendir():
+    output = Path("output").resolve()
+    subprocess.Popen(["explorer", str(output)])
