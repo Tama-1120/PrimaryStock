@@ -424,7 +424,9 @@ def screenstock(df, progress_callback=None):
             if progress_callback is not None:
                 progress_callback(i, total)
 
+            print("データ取得中")
             print(f"\rprocessed: {i}/{total} ({i/total:.1%})", end="", flush=True)
+            print("データ取得完了")
     print()
 
     drop_index =[]
