@@ -1,5 +1,5 @@
 import PySide6
-from PySide6.QtWidgets import QPushButton, QWidget
+from PySide6.QtWidgets import QPushButton, QWidget, QProgressBar, QVBoxLayout
 from PySide6.QtCore import QThread
 import os
 from services.services import search
@@ -14,8 +14,14 @@ class MainWindow(QWidget):
         #ウィンドウタイトル
         self.setWindowTitle("PrimaryStock")
 
+        layout = QVBoxLayout(self)
+
         #ボタン表示
         self.setButton()
+        self.progress = QProgressBar()
+
+        layout.addWidget(self.button)
+        layout.addWidget(self.progress)
 
     #ボタンメソッド
     def setButton(self):
@@ -32,6 +38,8 @@ class MainWindow(QWidget):
         self.worker.moveToThread(self.thread)
 
         self.thread.started.connect(self.worker.run)
+        self.worker.progress.connect(self.on_progress)
+
         self.worker.finished.connect(self.on_finished)
 
         self.worker.finished.connect(self.thread.quit)
@@ -44,6 +52,11 @@ class MainWindow(QWidget):
         self.button.setEnabled(True)
         dialog = ResultDialog(self, df)
         dialog.exec()
+
+    def on_progress(self, current, total):
+        self.progress.setMaximum(total)
+        self.progress.setValue(current)
+        self.progress.setFormat("%v/%m %p%")
 
 
 if __name__ == "__main__":

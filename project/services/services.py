@@ -407,7 +407,7 @@ def irbank(row):
 
     return index, code, EPSBPS, haitou
 
-def screenstock(df):
+def screenstock(df, progress_callback=None):
 
     #証券コード取得
     codes = df.iloc[:, 0].tolist()
@@ -420,6 +420,10 @@ def screenstock(df):
     with ThreadPoolExecutor(max_workers=5) as executor:
         for i, result in enumerate(executor.map(irbank, rows), start = 1):
             results.append(result)
+
+            if progress_callback is not None:
+                progress_callback(i, total)
+
             print(f"\rprocessed: {i}/{total} ({i/total:.1%})", end="", flush=True)
     print()
 
@@ -441,9 +445,9 @@ def outputcsv(result):
     output_dir.mkdir(parents=True, exist_ok=True)
     result.to_csv(output_dir / f"{dt}.csv" , index=False, encoding="utf-8-sig")
 
-def search():
+def search(progress_callback=None):
     df = tv()
-    result = screenstock(df)
+    result = screenstock(df, progress_callback)
     return result
 
 def opendir():
