@@ -7,14 +7,14 @@
 ## 実行方法
 
 開発者向け(Python):
-python PrimaryStock.py
+python ./project/main.py
 
 利用者向け(EXE):
-PrimaryStock.exeを実行
+PrimaryStock-v-2.0.0.exeを実行
 
 ## 出力先
 
-output/YYYYMMDD_HHMMSS/
+./project/output/YYYYMMDD_HHMMSS/
 
 ## 推奨環境
 
